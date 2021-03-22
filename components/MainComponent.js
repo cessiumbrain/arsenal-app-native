@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ImageBackground, StyleSheet, Text} from 'react-native';
+import {View, ImageBackground, StyleSheet} from 'react-native';
 import Login from './LoginComponent';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
@@ -7,7 +7,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import Home from './HomeComponent';
 import Dashboard from './DashboardComponent';
 import Calendar from './CalendarComponent'
-import {connect, Provider} from 'react-redux';
+import {connect} from 'react-redux';
 
 
 const DirectoryNavigator = createStackNavigator(
@@ -47,13 +47,15 @@ class Main extends Component {
     }
 
     render(){
+
         return(
 
-                <View style={{
+                <View 
+                style={{
                 flex: 1,
                 height: "100%",
                 width: "100%",
-                backgroundColor: "blue",
+
                 paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight
             }}>
 
@@ -76,7 +78,11 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = state => {
+    return {
+        state
+    }
+}
 
 
-
-export default Main
+export default connect(mapStateToProps)(Main)
