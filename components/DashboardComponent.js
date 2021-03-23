@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import { ImageBackground } from 'react-native';
 import {View, Text, Select, StyleSheet, Picker, Button, ScrollView} from 'react-native';
+import {Input} from 'react-native-elements';
 import {connect} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const mapStateToProps = state => {
     return {
-        currentSpecial: state.currentSpecial
+        specialType: state.currentSpecial.specialType,
+        startTime: state.currentSpecial.startTime,
+        endTime: state.currentSpecial.endTime
     }
 }
 
@@ -16,56 +19,15 @@ class Dashboard extends Component {
     constructor(props){
         super(props)
         this.state={
-            formSpecialName: 'default',
-            showStartTime: false
+            specialType: null,
+            startTime: null,
+            endTime: null 
         }
     }   
 
-
-
-    handleFormChange(){
-
-    }
-
-    /*showStartTime(){
-        this.setState({showStartTime: !this.showStartTime})
-    }*/
     render(){
-        const StartTime = (props) => {
-            if(this.state.showStartTime) {
-                return(
-                    <DateTimePicker
-                    testID="dateTimePicker"
-                    value={new Date()}
-                    mode='time'
-                    is24Hour={true}
-                    display="spinner"></DateTimePicker>
-                )
-            } else {
-                return(
-                    <>
-                    </>
-                )
-            }
-        }
+        console.log(this.props)
 
-    const EndTime = (props) => {
-        if(this.state.showEndTime){
-            return(
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={new Date()}
-                    mode='time'
-                    is24Hour={true}
-                    display="spinner"></DateTimePicker>
-            )
-        } else {
-            return(
-                <>
-                </>
-            )
-        }
-    }
         return(
             <ImageBackground
                 source={require('./0572.jpg')}
@@ -74,38 +36,31 @@ class Dashboard extends Component {
             <View style={styles.backgroundBox}>
                 <Text style={{fontSize: 30, padding: 10}}>Admin Dashboard</Text>
                 <View style={styles.formRow}>
-                    <Text>Select Special</Text>
-                    <Picker
-                        selectedValue='Special Type'
-                        style={{ height: 50, width: 150, backgroundColor: 'white' }}
-                        onValueChange={(value) => this.setState({
-                            ...this.state, formSpecialName: value
-                        })}
-                    >
-                        <Picker.Item label="Half Off Cover" value="Half Off Cover" />
-                        <Picker.Item label="Free Cover" value="Free Cover" />
-                        <Picker.Item label="Free Game" value="Free Game"/>
-                    </Picker>
-                </View>
-                <View style={styles.formRow}>
-                    <Text>Start Time:</Text>
-                    <Text>End Time:</Text>
+                    <Input
+                    label='Special Type'
+                    onChangeText={ (text)=>this.setState({specialType: text })}
+                    value={this.state.specialType}>
 
+                    </Input>
                 </View>
+        
                 <View style={styles.formRow}>
-                    <View style={{margin: 3}}>
-                     <Button
-                        
-                        title="Set Start Time"
-                        onPress={()=>this.setState({showStartTime: !this.state.showStartTime})}></Button>
-                    <StartTime/>   
-                    </View>
-                    <View style={{margin: 3}}>
-                        <Button
                     
-                        title="Set End Time"
-                        onPress={()=>this.setState({showEndTime: !this.state.showEndTime})}/>
-                    <EndTime/>
+                    <View style={{margin: 3}}>
+                        <Input
+                        label='Start Time'
+                        onChangeText={(text)=>this.setState({startTime: text})}
+                        value={this.state.startTime}
+                        >
+                        </Input>
+                        <Input
+                        label='End Time'
+                        onChangeText={(text)=>this.setState({endTime: text})}
+                        value={this.state.endTime}
+                        >
+                            
+                        </Input>
+                    
                     </View>
                     
                     
@@ -114,7 +69,19 @@ class Dashboard extends Component {
             </View>
             
             <Button
-            title="submit">Submit</Button>
+            title="submit"
+            onPress={()=>this.props.dispatch({type: 'SET_SPECIAL', payload: 
+            {
+                specialType: this.state.specialType,
+                startTime: this.state.startTime,
+                endTime: this.state.endTime
+            }})}>Submit</Button>
+            <Button
+            title='Clear'></Button>
+            
+            <Text>Current Special: {this.props.specialType}</Text>
+            <Text>Start Time: {this.state.startTime}</Text>
+            <Text>End Time: {this.state.endTime}</Text>
             </ImageBackground>
         )
         

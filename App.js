@@ -7,7 +7,31 @@ import Home from './components/HomeComponent';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux'
 
+const currentSpecial = (state ={
+        specialType: null,
+        startTime: null,
+        endTime: null
+}, action)=> {
+  switch(action.type){
+    case 'SET_SPECIAL':
+      return state= {
+        ...state, 
+        specialType: action.payload.specialType,
+        startTime: action.payload.startTime,
+        endTime: action.payload.endTime
 
+      }
+    default: return state
+  }
+}
+
+const currentUser = (state=true, action) => {
+  switch(action.type){
+    case 'CURRENT_USER_TRUE': 
+    return state=true;
+    default: return state;
+  }
+}
 
 const users = (state=[
   {
@@ -28,8 +52,6 @@ const users = (state=[
       //search users array for a user with username === to action.payload.usernameInputValue
       const userObject = state.filter(user=> user.username === action.payload.usernameInputValue)[0];
       //if the username exists...
-      console.log(userObject)
-      
       if (userObject){
         //find the userIndex of current user
       const findUserIndex = () => {
@@ -61,7 +83,7 @@ const users = (state=[
 }
 
 
-const rootReducer = combineReducers({users})
+const rootReducer = combineReducers({users, currentUser, currentSpecial})
 const store = createStore(rootReducer)
 
 export default function App() {

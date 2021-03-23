@@ -21,7 +21,7 @@ class Login extends Component {
 
      
     render(){
-        console.log()
+
         return(
             <ImageBackground
                 source={require('./0572.jpg')}
@@ -59,6 +59,7 @@ class Login extends Component {
                         style={{margin: 20}}
                         
                         onPress={()=> {
+                            
                             this.props.dispatch({type: 'LOGIN', payload: {
                                 usernameInputValue: this.state.usernameInputValue,
                                 passwordInputValue: this.state.passwordInputValue
