@@ -8,12 +8,13 @@ import Home from './HomeComponent';
 import Dashboard from './DashboardComponent';
 import Calendar from './CalendarComponent'
 import {connect} from 'react-redux';
-
+import WaitList from './WaitList';
 
 const DirectoryNavigator = createStackNavigator(
     {
         Login: { screen: Login },
-        Home: {screen: Home}
+        Home: {screen: Home},
+
     }, 
     {
         initialRouteName: 'Login',
@@ -33,7 +34,8 @@ const DrawerNavigator = createDrawerNavigator({
     Login: { screen: Login },
     Home: { screen: Home },
     Dashboard: { screen: Dashboard },
-    Calendar: { screen: Calendar }
+    Calendar: { screen: Calendar },
+    WaitList: { screen: WaitList }
 },
 {
     drawerBackgroundColor: '#fcdb03'

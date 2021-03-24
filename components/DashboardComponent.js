@@ -66,6 +66,8 @@ class Dashboard extends Component {
                     
                     
                 </View>
+
+                
             </View>
             
             <Button
@@ -77,11 +79,13 @@ class Dashboard extends Component {
                 endTime: this.state.endTime
             }})}>Submit</Button>
             <Button
-            title='Clear'></Button>
+            title='Clear'
+            onPress={()=>this.props.dispatch({type: 'CLEAR_SPECIAL'})}
+            ></Button>
             
             <Text>Current Special: {this.props.specialType}</Text>
-            <Text>Start Time: {this.state.startTime}</Text>
-            <Text>End Time: {this.state.endTime}</Text>
+            <Text>Start Time: {this.props.startTime}</Text>
+            <Text>End Time: {this.props.endTime}</Text>
             </ImageBackground>
         )
         
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
     },
     backgroundBox: {
         backgroundColor: 'hsla(360, 100%, 100%, 0.3)',
-        height: '50%',
+        height: '70%',
         alignItems: 'center',
         width: '80%'
     }

@@ -1,21 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ImageBackground, Button, FlatList} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
+import {connect} from 'react-redux';
 
 
-const ActiveSpecial = (props) => {
-   if (props.ActiveSpecial) {
-        return(
-            <ListItem.Subtitle
-            style={{color: "#09f919"}}>
-            Active</ListItem.Subtitle>
-        )
-    } else {
-        return(
-            <ListItem.Subtitle>None Active</ListItem.Subtitle>
-        )
-    }
-}
 
 class Home extends Component {
     render(){
@@ -24,18 +12,13 @@ class Home extends Component {
                 source={require('./0572.jpg')}
                 style={styles.imageBackground}
                 >
-                    <Icon
-                    reverse
-                    name='trophy-outline'
-                    type='ionicon'
-                    color='#517fa4'
-                    size={40}
-                    />
+                    
+ 
                     <Icon
                     reverse
                     name='home'
                     type='font-awesome'
-                    color='#517fa4'
+                    color='#fcdb03'
                     size={40}
                     onPress={()=>   this.props.navigation.navigate('Login')}
                     />
@@ -43,30 +26,35 @@ class Home extends Component {
                     reverse
                     name='fa-calendar'
                     type='font-awesome'
-                    color='#517fa4'
+                    color='#fcdb03'
                     size={40}
                     onPress={()=>   this.props.navigation.navigate('Login')}
                     />
 
                    <ListItem
-                   title="title"
-                   subtitle="subtitle"
                    >
-                       <ListItem.Title>Current Special</ListItem.Title>
-                       
-                       <ActiveSpecial/>
-                       
+                       <Icon
+                        reverse
+                        name='fa-search-dollar'
+
+                        type='ionicon'
+                        color={this.props.specialType ? '#00ff38' : '#EF5350'}>
+
+                       </Icon>
+                       <ListItem.Title>Active Special: {this.props.specialType}</ListItem.Title>
                        
                    </ListItem>
 
-                   <ListItem
-                   title="title"
-                   subtitle="subtitle"
-                   >
-                       <ListItem.Title>Wait List Status:</ListItem.Title>
-                       
-                       
-                       
+                   <ListItem>
+                       <Icon
+                        reverse
+                        name='fa-search-dollar'
+
+                        type='ionicon'
+                        color={this.props.currentUser.waitList ? '#00ff38' : '#EF5350'}>
+
+                       </Icon>
+                       <ListItem.Title>Wait List: {this.props.currentUser.waitList ? 'Ready' : 'Not Ready'}</ListItem.Title>
                        
                    </ListItem>
                
@@ -88,4 +76,11 @@ const styles = StyleSheet.create({
 }
 )
 
-export default Home
+const mapStateToProps = state => {
+    return {
+        specialType: state.currentSpecial.specialType,
+        currentUser: state.currentUser
+    }
+}
+
+export default connect(mapStateToProps)(Home)

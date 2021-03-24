@@ -7,8 +7,9 @@ import Home from './components/HomeComponent';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux'
 
+//CURRENT SPECIAL
 const currentSpecial = (state ={
-        specialType: null,
+        specialType: 'Half Off Cover',
         startTime: null,
         endTime: null
 }, action)=> {
@@ -20,15 +21,25 @@ const currentSpecial = (state ={
         startTime: action.payload.startTime,
         endTime: action.payload.endTime
 
+      };
+      case 'CLEAR_SPECIAL': return state={
+        specialType: null,
+        startTime: null,
+        endTime: null
       }
     default: return state
   }
 }
 
-const currentUser = (state=true, action) => {
+const currentUser = (state={
+    username: 'AJ',
+    password: '123',
+    loggedIn: false,
+    waitList: false
+  
+}, action) => {
   switch(action.type){
-    case 'CURRENT_USER_TRUE': 
-    return state=true;
+    
     default: return state;
   }
 }
@@ -37,12 +48,16 @@ const users = (state=[
   {
     username: 'AJ',
     password: '123',
-    loggedIn: false
+    loggedIn: false,
+    waitList: false,
+    id: 1
   },
   {
     username: "Joe",
     password: "password",
-    loggedIn: false
+    loggedIn: false,
+    waitList: false,
+    id: 2
   }
 ], action)=> {
   switch(action.type){
@@ -82,8 +97,15 @@ const users = (state=[
   }
 }
 
+//Wait List
+const WaitList = (state = [], action)=> {
+  switch(action.type){
+    default: return state
+  }
+}
 
-const rootReducer = combineReducers({users, currentUser, currentSpecial})
+
+const rootReducer = combineReducers({users, currentUser, currentSpecial, WaitList})
 const store = createStore(rootReducer)
 
 export default function App() {
