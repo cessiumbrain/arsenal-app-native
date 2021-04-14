@@ -1,39 +1,27 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ImageBackground, Button, FlatList} from 'react-native';
-import {Icon, ListItem} from 'react-native-elements';
+import {Icon, ListItem, Card} from 'react-native-elements';
 import {connect} from 'react-redux';
-
+import * as Notifications from 'expo-notifications';
 
 
 class Home extends Component {
+
+  
+
     render(){
+
         return(
             <ImageBackground
                 source={require('./0572.jpg')}
                 style={styles.imageBackground}
                 >
+                    <View style={{backgroundColor: 'white', alignItems: 'center', padding: 10}}>
+                        <Text>{this.props.currentUser.username}</Text>
                     
- 
-                    <Icon
-                    reverse
-                    name='home'
-                    type='font-awesome'
-                    color='#fcdb03'
-                    size={40}
-                    onPress={()=>   this.props.navigation.navigate('Login')}
-                    />
-                    <Icon
-                    reverse
-                    name='fa-calendar'
-                    type='font-awesome'
-                    color='#fcdb03'
-                    size={40}
-                    onPress={()=>   this.props.navigation.navigate('Login')}
-                    />
 
-                   <ListItem
-                   >
-                       <Icon
+                    <Card>
+                        <Icon
                         reverse
                         name='fa-search-dollar'
 
@@ -42,10 +30,14 @@ class Home extends Component {
 
                        </Icon>
                        <ListItem.Title>Active Special: {this.props.specialType}</ListItem.Title>
-                       
-                   </ListItem>
+                       <ListItem.Subtitle>From: {this.props.startTime} To: {this.props.endTime}</ListItem.Subtitle>
 
-                   <ListItem>
+                    </Card>
+                       
+                       
+
+                    <Card>
+                     <ListItem>
                        <Icon
                         reverse
                         name='fa-search-dollar'
@@ -56,8 +48,10 @@ class Home extends Component {
                        </Icon>
                        <ListItem.Title>Wait List: {this.props.currentUser.waitList ? 'Ready' : 'Not Ready'}</ListItem.Title>
                        
-                   </ListItem>
-               
+                   </ListItem>   
+                    </Card>
+                   
+               </View>
 
             </ImageBackground>
         )
@@ -79,7 +73,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         specialType: state.currentSpecial.specialType,
-        currentUser: state.currentUser
+        startTime: state.currentSpecial.startTime,
+        endTime: state.currentSpecial.endTime,
+        currentUser: state.users.currentUser
     }
 }
 

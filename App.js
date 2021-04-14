@@ -7,6 +7,9 @@ import Home from './components/HomeComponent';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux'
 
+
+
+
 //CURRENT SPECIAL
 const currentSpecial = (state ={
         specialType: 'Half Off Cover',
@@ -31,36 +34,49 @@ const currentSpecial = (state ={
   }
 }
 
-const currentUser = (state={
-    username: 'AJ',
-    password: '123',
-    loggedIn: false,
-    waitList: false
-  
-}, action) => {
-  switch(action.type){
-    
-    default: return state;
+//USERS
+const users = (state=
+  {
+    currentUser: {
+      username: 'AJ',
+      password: '123',
+      loggedIn: false,
+      waitList: true,
+      id: 1,
+      admin: true
+    },
+    userList: [
+      {
+        username: 'AJ',
+        password: '123',
+        loggedIn: false,
+        waitList: true,
+        id: 1
+      },
+      {
+        username: 'Joe',
+        password: '123',
+        loggedIn: false,
+        waitList: false,
+        id: 1
+      }
+    ],
+    waitList: [
+      {
+        username: 'AJ',
+        password: '123',
+        loggedIn: false,
+        waitList: true,
+        id: 1
+      }
+    ]
   }
-}
+, 
 
-const users = (state=[
-  {
-    username: 'AJ',
-    password: '123',
-    loggedIn: false,
-    waitList: false,
-    id: 1
-  },
-  {
-    username: "Joe",
-    password: "password",
-    loggedIn: false,
-    waitList: false,
-    id: 2
-  }
-], action)=> {
+action)=> {
   switch(action.type){
+
+    //-----------LOGIN-----------
     case 'LOGIN':
       //copy users array
       const usersArray = state
@@ -86,27 +102,43 @@ const users = (state=[
       usersArray.push(userObject)
      }
       }
-      
-
       //check if userobject.username and username.password are equal
-     
-
      return usersArray;
 
-    default: return state
+     //---------Sign Up---------
+    case 'SIGN_UP':
+          const newUser = {
+            username: action.payload.newUserUsername,
+            password: action.payload.newUserPassword,
+            loggedIn: true,
+            waitList: true,
+          }
+          //concat payload to state
+          return {
+            ...state,
+            currentUser: newUser,
+            userList: state.userList.concat(newUser) 
+          }
+     //-------------WaitList------------
+    
+    
+      case 'ADD_WAIT_USER':
+      //copy waitList
+      const waitArray = [...state.waitList];
+      waitArray.push(action.payload)
+      return {
+        ...state,
+        waitList: waitArray
+      }
+
+     default: return state
   }
 }
 
-//Wait List
-const WaitList = (state = [], action)=> {
-  switch(action.type){
-    default: return state
-  }
-}
 
 
-const rootReducer = combineReducers({users, currentUser, currentSpecial, WaitList})
-const store = createStore(rootReducer)
+const rootReducer = combineReducers({users, currentSpecial})
+export const store = createStore(rootReducer)
 
 export default function App() {
 

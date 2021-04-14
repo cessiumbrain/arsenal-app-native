@@ -9,49 +9,71 @@ import Dashboard from './DashboardComponent';
 import Calendar from './CalendarComponent'
 import {connect} from 'react-redux';
 import WaitList from './WaitList';
+import Schedule from './ScheduleComponent';
+import Contact from './ContactComponent';
+import {store} from '../App';
+import SignUp from './SignUpComponent';
+import * as Haptics from 'expo-haptics';
 
 const DirectoryNavigator = createStackNavigator(
     {
-        Login: { screen: Login },
-        Home: {screen: Home},
-
-    }, 
-    {
-        initialRouteName: 'Login',
-        defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#5637DD'
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                color: '#fff'
-            }
-        }
+        Login: {screen: Login},
+        Home: {screen: Home}
     }
-);
+)
 
-const DrawerNavigator = createDrawerNavigator({
-    Login: { screen: Login },
-    Home: { screen: Home },
-    Dashboard: { screen: Dashboard },
-    Calendar: { screen: Calendar },
-    WaitList: { screen: WaitList }
-},
-{
-    drawerBackgroundColor: '#fcdb03'
-})
 
-const AppNavigator = createAppContainer(DrawerNavigator);
+
+
 
 class Main extends Component {
     constructor(props){
         super(props)
     }
 
+    
+    
     render(){
+        
+        let DrawerObj = {}
 
+        if (this.props.currentUser.admin) {
+            DrawerObj = 
+            {
+            Login: { screen: Login },
+            Home: { screen: Home },
+            Dashboard: { screen: Dashboard },
+            Schedule: { screen: Schedule },
+            WaitList: { screen: WaitList },
+            SignUp: { screen: SignUp}
+
+            }
+        } else {
+            DrawerObj = {
+                Login: { screen: Login },
+                Home: { screen: Home },
+                Schedule: { screen: Schedule },
+                SignUp: { screen: SignUp}
+            }
+        }
+            
+
+        const DrawerNavigator = 
+createDrawerNavigator(
+    {
+     ...DrawerObj
+
+},
+{
+    drawerBackgroundColor: '#fcdb03'
+})
+
+const AppNavigator = createAppContainer(DrawerNavigator)
+
+        if(this.props.currentUser.waitList) {
+            Haptics.selectionAsync()
+        }
         return(
-
                 <View 
                 style={{
                 flex: 1,
@@ -60,10 +82,9 @@ class Main extends Component {
 
                 paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight
             }}>
-
-                <AppNavigator />
+            <AppNavigator/>
             </View>
-
+            
 
             
         );
@@ -82,9 +103,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        state
+        currentUser: state.users.currentUser
     }
 }
+
+
+
 
 
 export default connect(mapStateToProps)(Main)

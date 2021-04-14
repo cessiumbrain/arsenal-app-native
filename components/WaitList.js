@@ -1,64 +1,77 @@
 import React, {Component} from 'react';
 import { ListItem, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { Text, FlatList, View, StyleSheet, ImageBackground} from 'react-native';
+import { Text, FlatList, View, StyleSheet, ImageBackground, ScrollView} from 'react-native';
 
 class WaitList extends Component {
     constructor(props){
-        super(props)
+        super(props);
     }
-    render(){
 
+    render(){
+        console.log(this.props.userList)
         const UserItem = ({item}) => {
-        
+            
             return(
             <ListItem
             key={item.id}
-            title='ddd'
+            title=''
             subtitle={item.username}>
                 <Text>{item.username}</Text>
+                <Text>Add</Text>
                 <Icon
                 reverse
-                name='ios-american-football'
-                type='ionicon'
-                color='#517fa4'
-                />
-                <Icon
-                reverse
-                name='fa-bell'
+                name='plus'
                 type='font-awesome'
-                color='#517fa4'
-                />
+                color='#fcdb03'
+                onPress={()=>{this.props.dispatch({type: 'ADD_WAIT_USER', payload: item})}}
 
+                />
             </ListItem>
             )
         }
-        
-            
-        
+
         return(
             <ImageBackground
                 source={require('./0572.jpg')}
                 style={styles.imageBackground}
                 >
-            <View>
-                <View>
+                <ScrollView>
+                
                     <Text style= {{marginTop: 30, fontSize: 24}}>Current WaitList Customer: </Text>
-                </View>
-                <View>
+                
+                    <View>
+                        {this.props.waitList.map(user=>(
+                            <ListItem><Text>
+                            {user.username}   </Text>
+                            <Icon
+                    reverse
+                    name='phone'
+                    type='font-awesome'
+                    color='green'
+                    />
+                    <Text>Remove</Text>
+                    <Icon
+                    reverse
+                    name='minus'
+                    type='font-awesome'
+                    color='red'
+                    onPress={()=>{this.props.dispatch({type: 'REMOVE_WAIT_USER', payload: user});
+                    }}
+                    /></ListItem>
+                        ))}
+                    </View>
+                  
+                    <Text style= {{marginTop: 30, fontSize: 24}}>Users:</Text>
+                
                     <FlatList
-                    data={this.props.users}
+                    data={this.props.userList}
                     renderItem={UserItem}
-                    keyExtractor={item=> item.id.toString()}
+                    
                     ></FlatList>
-                </View>
-
-
-            </View>
-            </ImageBackground>
-            
+                </ScrollView>
+            </ImageBackground>   
         )
-        
     }
 }
 
@@ -76,7 +89,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        users: state.users
+        userList: state.users.userList,
+        waitList: state.users.waitList,
+        waitListLength: state.waitList.length
     }
 }
 

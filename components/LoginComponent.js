@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ImageBackground, StyleSheet, Image, TextInput} from 'react-native';
+import {View, ImageBackground, StyleSheet, Image, TextInput, Pressable, Text} from 'react-native';
 import {Button} from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -9,19 +9,16 @@ class Login extends Component {
         super(props),
         this.state = {
             usernameInputValue: '',
-            passwordInputValue:''
+            passwordInputValue:'',
         }
-     
-
     }
 
     static navigationOptions = {
         title: 'Login'
     }
 
-     
     render(){
-
+        
         return(
             <ImageBackground
                 source={require('./0572.jpg')}
@@ -56,7 +53,7 @@ class Login extends Component {
                     <Button
                         title="LOGIN"
                         size={30}
-                        style={{margin: 20}}
+                        buttonStyle={{margin: 10}}
                         
                         onPress={()=> {
                             
@@ -72,7 +69,12 @@ class Login extends Component {
                             }}>
 
                     </Button>
-
+                    
+                    <Pressable onPress={()=>this.props.navigation.navigate('SignUp')}
+                    hitSlop={10}>
+                        <Text>Sign Up</Text>    
+                    </Pressable>
+                    
                     
 
             </ImageBackground>
@@ -101,8 +103,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-       users: state.users,
-       currentUser: state.currentUser
+       users: state.users.userList,
+       currentUser: state.users.currentUser
     }
 }
 
