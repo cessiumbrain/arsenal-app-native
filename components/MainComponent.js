@@ -22,17 +22,11 @@ const DirectoryNavigator = createStackNavigator(
     }
 )
 
-
-
-
-
 class Main extends Component {
     constructor(props){
         super(props)
     }
 
-    
-    
     render(){
         
         let DrawerObj = {}
@@ -58,17 +52,16 @@ class Main extends Component {
         }
             
 
-        const DrawerNavigator = 
-createDrawerNavigator(
-    {
-     ...DrawerObj
+        const DrawerNavigator = createDrawerNavigator(
+        {
+        ...DrawerObj
 
-},
-{
-    drawerBackgroundColor: '#fcdb03'
-})
+        },
+        {
+            drawerBackgroundColor: '#fcdb03'
+        })
 
-const AppNavigator = createAppContainer(DrawerNavigator)
+        const AppNavigator = createAppContainer(DrawerNavigator)
 
         if(this.props.currentUser.waitList) {
             Haptics.selectionAsync()

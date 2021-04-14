@@ -45,7 +45,7 @@ class Schedule extends Component {
                 </Card>
                 <Card>
                     <Card.Title>80s/90s Night</Card.Title>
-                    <Card.Image source={require('./Slide9.jpeg')}>
+                    <Card.Image source={require('../assets/01.jpeg')}>
 
                         
                     </Card.Image>

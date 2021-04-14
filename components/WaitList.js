@@ -91,7 +91,7 @@ const mapStateToProps = state => {
     return {
         userList: state.users.userList,
         waitList: state.users.waitList,
-        waitListLength: state.waitList.length
+        waitListLength: state.users.waitList.length
     }
 }
 
