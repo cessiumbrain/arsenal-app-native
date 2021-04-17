@@ -13,7 +13,7 @@ class Schedule extends Component {
             <ScrollView>
                 <Card>
                     <Card.Title>Craft Beer Night</Card.Title>
-                    <Card.Image source={require('./craftBeerNight.jpg')}>
+                    <Card.Image>
 
                         
                     </Card.Image>
@@ -24,7 +24,7 @@ class Schedule extends Component {
                 
                 <Card>
                     <Card.Title>College Night</Card.Title>
-                    <Card.Image source={require('./collegeNight.jpeg')}>
+                    <Card.Image>
 
                         
                     </Card.Image>
@@ -35,7 +35,7 @@ class Schedule extends Component {
 
                 <Card>
                     <Card.Title>Rock n' Bowl</Card.Title>
-                    <Card.Image source={require('./Slide1.jpeg')}>
+                    <Card.Image>
 
                         
                     </Card.Image>
@@ -45,7 +45,7 @@ class Schedule extends Component {
                 </Card>
                 <Card>
                     <Card.Title>80s/90s Night</Card.Title>
-                    <Card.Image source={require('../assets/01.jpeg')}>
+                    <Card.Image>
 
                         
                     </Card.Image>

@@ -9,7 +9,7 @@ class WaitList extends Component {
     }
 
     render(){
-        console.log(this.props.userList)
+        
         const UserItem = ({item}) => {
             
             return(

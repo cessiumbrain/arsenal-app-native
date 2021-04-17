@@ -1,3 +1,4 @@
+import { StackViewStyleInterpolator } from 'react-navigation-stack';
 import { combineReducers } from 'redux';
 
 
@@ -29,12 +30,7 @@ default: return state
 const users = (state=
 {
 currentUser: {
-  username: 'AJ',
-  password: '123',
-  loggedIn: false,
-  waitList: true,
-  id: 1,
-  admin: true
+
 },
 userList: [
   {
@@ -49,7 +45,8 @@ userList: [
     password: '123',
     loggedIn: false,
     waitList: false,
-    id: 1
+    id: 1,
+    admin: true
   }
 ],
 waitList: [
@@ -70,9 +67,9 @@ switch(action.type){
 //-----------LOGIN-----------
 case 'LOGIN':
   //copy users array
-  const usersArray = state
+  const usersArray = state.userList
   //search users array for a user with username === to action.payload.usernameInputValue
-  const userObject = state.filter(user=> user.username === action.payload.usernameInputValue)[0];
+  const userObject = state.userList.filter(user=> user.username === action.payload.usernameInputValue)[0];
   //if the username exists...
   if (userObject){
     //find the userIndex of current user
@@ -94,7 +91,11 @@ case 'LOGIN':
  }
   }
   //check if userobject.username and username.password are equal
- return usersArray;
+ return {
+   ...state,
+   userList: usersArray,
+   currentUser: userObject
+ };
 
  //---------Sign Up---------
 case 'SIGN_UP':
@@ -115,7 +116,12 @@ case 'SIGN_UP':
 
   case 'ADD_WAIT_USER':
   //copy waitList
-  console.log(state.waitList)
+
+    if(state.currentUser.username === action.payload.username){
+      //copy currentUser
+      let currentUserCopy = {...state.currentUser};
+      currentUserCopy.waitList = 'on'
+    }
   const addWaitArray = [...state.waitList];
   addWaitArray.push(action.payload)
   return {

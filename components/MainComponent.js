@@ -39,7 +39,6 @@ class Main extends Component {
             Dashboard: { screen: Dashboard },
             Schedule: { screen: Schedule },
             WaitList: { screen: WaitList },
-            SignUp: { screen: SignUp}
 
             }
         } else {
@@ -47,7 +46,6 @@ class Main extends Component {
                 Login: { screen: Login },
                 Home: { screen: Home },
                 Schedule: { screen: Schedule },
-                SignUp: { screen: SignUp}
             }
         }
             
